@@ -27,8 +27,9 @@ if (isset($_GET['id'])) {
 
 }
  else {
-    echo 'no llego nada';
+//    echo 'no llego nada';
 }
 Conexion::cerrarConexion();
 ?>
+
 

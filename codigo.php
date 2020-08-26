@@ -93,7 +93,7 @@ $tipo_compra = 0;
                     <tr>
                         <td class="bg-gd-earth text-body-bg-light"><label for="area">Proyecto</label></td>
                         <td>
-                            <select name="id_proyecto" id="sc_proyecto" class="form-control" onchange="mostrarPrefijo()">
+                            <select name="id_proyecto" id="sc_proyecto" class="form-control" onclick="mostrarPrefijo()" onchange="mostrarPrefijo()">
                                 <?php
                                 $registro = pg_query($conexion, "SELECT id_proyecto, proyecto FROM sc_proyecto order by id_proyecto");
                                 while ($reg = pg_fetch_array($registro)) {
@@ -164,7 +164,7 @@ $tipo_compra = 0;
                         <td class="bg-gd-earth text-body-bg-light"><label for="area">Fecha de necesidad </label></td> 
                         <td>
                             <!--<input type="date" name="fecha_necesidad" id="calendar" class="form-control" required/>-->
-                            <input type="text" id="fecha_necesidad" placeholder="dd/mm/yy" name="fecha_necesidad" class="js-flatpickr form-control bg-white fecha_necesidad" data-input autocomplete="off"> 
+                            <input type="text" id="fecha_necesidad" placeholder="dd/mm/yy" name="fecha_necesidad" class="js-flatpickr form-control bg-white fecha_necesidad" data-input required autocomplete="off"> 
                       <!--<input type="text" class="js-flatpickr form-control bg-white" id="example-flatpickr-default" name="example-flatpickr-default" placeholder="Y-m-d">-->
                         </td></tr>
                     <tr>

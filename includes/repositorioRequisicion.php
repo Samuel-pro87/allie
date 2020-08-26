@@ -285,6 +285,33 @@ class repositorioRequisicion {
         }
         return $nextlevel;
     }
+    
+    public static function hacerCompra($conexion, $id, $folio) {
+         $comprar = false;
+        if (isset($conexion)) {
+            try {
+                //altera unicamente los campos de la tabla sc_requisicion_compra
+                $sql = "UPDATE sc_requisicion_compra SET status = 4, proceso = 3 WHERE id_requisicion_compra = $id;";
+                if($sql>0){
+                    $sqldos = "UPDATE sc_requisicion_compraheader SET status = 3, level = 3 WHERE folio_requisicion_compra = $folio;";
+                }
+                foreach ($conexion->query($sql) as $row) {
+                    self::$n[] = $row;
+                    $comprar = true;
+                }
+                return self::$n;
+//                print_r(self::$n['concepto_solicitado']);
+//                $requisicion += 1;
+                Conexion::cerrarConexion();
+//                die();
+            } catch (PDOException $ex) {
+                print "ERROR " . $ex->getMessage();
+                die();
+            }
+        }
+        return $comprar;
+        
+    }
 
 }
 

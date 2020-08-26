@@ -7,7 +7,7 @@ $cb->l_header_style = 'glass-inverse';
 $cb->l_sidebar_inverse = true;
 $cb->l_sidebar_mini = true;
 ?>
-<?php // require 'inc/_global/views/head_start.php';          ?>
+<?php // require 'inc/_global/views/head_start.php';            ?>
 <?php require 'inc/_global/views/head_end.php'; ?>
 <?php
 require 'inc/_global/views/page_start.php';
@@ -71,7 +71,7 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
                     sc_requisicion_compra where proceso = 2 and status = 2 and folio_requisicion_compra = '$folio'");
                             if ($det2 = pg_fetch_array($detalle)) {
                                 ?>
-                            <tr class="text-primary-darker">
+                                <tr class="text-primary-darker">
                                     <td scope="col"  style="width: 15%;"></td>
                                     <td scope="col">Concepto</td>
                                     <td scope="col">Cantidad</td>
@@ -151,25 +151,28 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
 <div class="col-12">
     <!-- Rounded -->
     <div class="block">
-        <div class="block-header block-header-default">
-            <h3 class="block-title">Observación</h3>
-        </div>
-        <div class="block-content">
-            <div class="row items-push-2x text-sm-left border-3x border-danger">
-                <div class="col-sm-6 col-xl-3 text-right">
-
-                </div>
-                <div class="col-sm-6 col-xl-3 text-right">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="col-sm-6 col-xl-3 text-right">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="col-sm-6 col-xl-3 text-right">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
+        <form action="hacerCompra.php" method="POST">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Observación</h3> <input name="folio" id="folio" value="<?php echo $folio ?>" hidden>
             </div>
-        </div>
+            <div class="block-content">
+                <div class="row items-push-2x text-sm-left border-3x border-danger">
+                    <div class="col-sm-6 col-xl-3 text-right">
+
+                    </div>
+                    <div class="col-sm-6 col-xl-3 text-right">
+                        <textarea class="form-control" name="obsr1" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="col-sm-6 col-xl-3 text-right">
+                        <textarea class="form-control" name="obsr2" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="col-sm-6 col-xl-3 text-right">
+                        <textarea class="form-control" name="obsr3" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-info min-width-125" data-toggle="click-ripple">Terminar Cotización</button>
+            </div>
+        </form>
     </div>
     <!-- END Rounded -->
 </div>
