@@ -179,10 +179,13 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                         <!--<th scope="col">Medida</th>-->
                         <th scope="col">Cantidad</th>
                         <th scope="col" class="bg-success">Precio1</th>
+                        <th scope="col" class="bg-success">Importe</th>
                         <th scope="col" class="bg-warning">Observación</th>
                         <th scope="col" class="bg-success">Precio2</th>
+                        <th scope="col" class="bg-success">Importe</th>
                         <th scope="col" class="bg-warning">Observación</th>
                         <th scope="col" class="bg-success">Precio3</th>
+                        <th scope="col" class="bg-success">Importe</th>
                         <th scope="col" class="bg-warning">Observación</th>
                         <!--<th scope="col">Detalles</th>-->
                         <th scope="col"></th>      
@@ -193,7 +196,7 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                 <?php
                 $i = 0;
                 $detall = pg_query($conexion, "SELECT id_requisicion_compra, concepto_solicitado, medida, cantidad, marca, modelo, detalle,
-                        precio1, precio2, precio3, observacion1, observacion2, observacion3, status FROM 
+                        precio1, precio2, precio3, observacion1, observacion2, observacion3, status, importe1, importe2, importe3 FROM 
                     sc_requisicion_compra where folio_requisicion_compra = '$folio' and proceso =1");
 //                    print_r($detall);
 //                die();
@@ -203,14 +206,17 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                     <tr class="row<?php echo $det['id_requisicion_compra']; ?>">
                         <th scope="col"><?php echo $i?></th>
                         <th scope="row"><?php echo $det['concepto_solicitado'] ?></th>
-                        <td class="cantidad"><?php echo $det['cantidad'] ?></td>
-                        <td class="colprecio1"><?php echo "$" . $det['precio1'] ?></td>
+                        <td class="cantidadd"><?php echo $det['cantidad'] ?></td>
+                        <td class="colprecio1"><?php echo  $det['precio1'] ?></td>
+                        <td class="colimp1"><?php echo  $det['importe1'] ?></td>
                         <?php // $imp1 = $det['precio1'] * $det['cantidad'] ?>
                         <th class="colobs1"></th>
-                        <td class="colprecio2"><?php echo "$" . $det['precio2'] ?></td>
+                        <td class="colprecio2"><?php echo $det['precio2'] ?></td>
+                        <td class="colimp2"><?php echo $det['importe2'] ?></td>
                         <?php // $imp2 = $det['precio2'] * $det['cantidad'] ?>
                         <th class="colobs2"></th>
-                        <th class="colprecio3"><?php echo "$" . $det['precio3'] ?></th>
+                        <th class="colprecio3"><?php echo  $det['precio3'] ?></th>
+                        <td class="colimp3"><?php echo  $det['importe3'] ?></td>
                         <?php // $imp3 = $det['precio3'] * $det['cantidad'] ?>
                         <th class="colobs3"></th>
                         <th></th>
@@ -221,9 +227,9 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                 </tbody>
             <?php } ?>
         </table>
-        <div class="col-12 bg-info-light text-right"> 
+<!--        <div class="col-12 bg-info-light text-right"> 
                 <a href="en_proceso_requisicion.php?folio=<?php echo $reg['folio_requisicion_compra']; ?>"><button type="button" class="btn btn-rounded btn-info min-width-125 mb-10" data-toggle="tooltip" title="Calcular Importe">Calcular Importes</button></a><br>
-        </div>
+        </div>-->
         <!--FILA DOS tabla de cotizados-->
         <div class="col-12">=================================================================================================================================
             <table class='table table-sm table-striped table-vcenter table-hover'>
@@ -296,7 +302,7 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
             <div class="modal-content">
                 <!-- Header -->
                 <form class="js-van" name="form_add_coti" id="form_add_coti" 
-                      onsubmit=" event.preventDefault(); sentDataProduct();"
+                      onsubmit=" event.preventDefault();"
                       action="" method="post">
                     <div class="py-30 px-5 text-center">
                         <a class="link-effect font-w700" href="index.php">
@@ -306,6 +312,7 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                         <!--<br><input type="text" class="concepto" id="concepto" name="concepto">-->
                         <h2 class="concepto" id="concepto" name="concepto"></h2>
                         <h2 class="h4 font-w400 text-muted mb-0 cantidad" id="cantidad" name="cantidad"></h2>
+                        <input  type="text" name="can" id="can" hidden>
                     </div>
                     <!-- END Header -->
 
@@ -413,12 +420,12 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
 
 <script>
     $(document).ready(function () {
-        //función para consultar la BDD e imprimir el concepto_solicitado y cantidad como encabezado del modal
+        //clase para consultar la BDD e imprimir el concepto_solicitado y cantidad como encabezado del modal
         $('.enviarId').click(function (e) {
             e.preventDefault();
             var id = $(this).attr('product');
             $.ajax({
-                url: 'includes/consulta.php',
+                url: 'includes/cotizacion.php',
                 type: 'POST',
                 async: true,
                 data: {
@@ -427,9 +434,10 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                 success: function (response) {
                     if (response != 'ERROR ') {
                         var info = JSON.parse(response);
-                        console.log(info);
+//                        console.log(info);
                         $('.concepto').html(info.concepto_solicitado);
                         $('.cantidad').html(info.cantidad);
+                        $('#can').val(info.cantidad);
                         $('.fol').val(info.folio_requisicion_compra);
                         $('.id').val(info.id_requisicion_compra);
                     }
@@ -439,7 +447,7 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                 }
             });
         });
-        //funcion para enviar datos para modificar precios y observaciones
+        //clase para enviar datos para modificar precios y observaciones
         $('.add_cot').click(function (e) {
             e.preventDefault();
             $.ajax({
@@ -462,6 +470,10 @@ $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_la
                         $('.row' + $a + ' .colobs1').html(info.o1);
                         $('.row' + $a + ' .colobs2').html(info.o2);
                         $('.row' + $a + ' .colobs3').html(info.o3);
+                        $('.row' + $a + ' .colimp1').html(info.i1);
+                        $('.row' + $a + ' .colimp2').html(info.i2);
+                        $('.row' + $a + ' .colimp3').html(info.i3);
+                        
                         $('.alertCoti').html('<p> Articulo Cotizado !!! </p>');
 
                     } else {

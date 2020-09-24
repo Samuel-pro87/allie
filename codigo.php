@@ -58,7 +58,7 @@ $tipo_compra = 0;
                                     echo "no estas bien.. ";
                                     break;
                             }
-                            echo $d . "," . date("d/F/Y h:m:s ");
+                            echo $d . ", " . date("d/F/Y h:m:s ");
                             ?><input name="fecha_requisicion" value="<?php echo date("d/M/Y h:m:s"); ?>" hidden>
                     </tr>
                     <tr><th></th><th></th></tr>

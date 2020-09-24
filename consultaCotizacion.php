@@ -7,7 +7,7 @@ $cb->l_header_style = 'glass-inverse';
 $cb->l_sidebar_inverse = true;
 $cb->l_sidebar_mini = true;
 ?>
-<?php // require 'inc/_global/views/head_start.php';            ?>
+<?php // require 'inc/_global/views/head_start.php';                ?>
 <?php require 'inc/_global/views/head_end.php'; ?>
 <?php
 require 'inc/_global/views/page_start.php';
@@ -21,8 +21,8 @@ require_once 'includes/Config.php';
 $cadenaConexion = "host=" . NOMBRE_SERVIDOR . " dbname=" . BASE_DATOS . " user=" . USUARIO . " password=" . PASS;
 $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: " . pg_last_error());
 $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, marca, modelo, detalle,
-                        precio1, precio2, precio3, status, proceso, id_requisicion_compra, observacion1, observacion2, observacion3 FROM 
-                    sc_requisicion_compra where proceso = 2  and status = 2 and folio_requisicion_compra = '$folio'");
+                        precio1, precio2, precio3, status, proceso, id_requisicion_compra, observacion1, observacion2, observacion3,
+                         importe1, importe2, importe3 FROM sc_requisicion_compra where proceso = 2  and status = 2 and folio_requisicion_compra = '$folio'");
 ?>
 
 <!-- Hero -->
@@ -42,18 +42,18 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
 <div class="col-md-12 mp-2">
     <div class="col-12 bg-light">
         <div class="row">
-            <form class="form-control border-1px" action="includes/consulta.php" method="POST" id="form_showreq">
+            <form class="form-control border-1px" action="" method="POST" id="form_showreq">
                 <div class="col-12">
                     <div class="row">
 
                         <div class="col-sm-5 mb-5">
                             <i class="text-body-color-dark"> Aquí podras encontrar información acerca de los datos de tú requisición</i>
                         </div>
-                        <div class="col-sm-3 mb-5">
-                            <button class="btn btn-block btn-noborder btn-rounded btn-alt-danger">
-                                <i class="fa fa-eye mr-10"></i> <?php echo $folio ?>
-                            </button>
-                        </div>
+                        <!--                        <div class="col-sm-3 mb-5">
+                                                    <button class="btn btn-block btn-noborder btn-rounded btn-alt-danger">
+                                                        <i class="fa fa-eye mr-10"></i> <?php echo $folio ?>
+                                                    </button>
+                                                </div>-->
                         <div>   
                             <input type="text" name="folios_" id="folio_" hidden value="<?php echo $folio ?>"/>
                         </div>
@@ -61,13 +61,45 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
                     </div>
                 </div>
             </form>
+
+            <div class="col-12">
+                <!-- Rounded -->
+                <div class="block">
+                    <form  action="includes/cotizacion.php" name="observacionesCompra" id="observacionesCompra" class="js-van"
+                           onload="e.preventeDefaul();" method="post">
+                        <div class="block-header block-header-default">
+
+                        </div>
+                        <div class="block-content">
+                            <div class="row items-push-2x text-sm-left border-3x border-danger">
+                                <div class="col-sm-6 col-xl-3 text-center">
+                                    <h3 class="block-title">Proponer proveedor</h3>
+                                </div>
+                                <div class="col-sm-6 col-xl-3 text-center custom-control custom-radio bg-corporate-lighter">
+                                     <input class="custom-control-input" type="radio" name="example-inline-radios" id="example-inline-radio1" value="option1" checked>
+                                    <label class="custom-control-label" for="example-inline-radio1">Option 1</label>
+                                </div>
+                                <div class="col-sm-6 col-xl-3 text-center custom-control custom-radio">
+                                      <input class="custom-control-input" type="radio" name="example-inline-radios" id="example-inline-radio2" value="option2">
+                                    <label class="custom-control-label" for="example-inline-radio2">Option 2</label>
+                                </div>
+                                <div class="col-sm-6 col-xl-3 text-center custom-control custom-radio bg-corporate-lighter">
+                                     <input class="custom-control-input" type="radio" name="example-inline-radios" id="example-inline-radio3" value="option3">
+                                    <label class="custom-control-label" for="example-inline-radio3">Option 3</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- END Rounded -->
+            </div>
             <div class="col-md-12">
                 <div class="row">
                     <table class='table table-sm table-striped table-vcenter table-hover'>
                         <thead class="thead-light">
                             <?php
                             $detalle = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, marca, modelo, detalle,
-                        precio1, precio2, precio3, status, proceso FROM 
+                        precio1, precio2, precio3, status, proceso, importe1, importe2, importe3 FROM 
                     sc_requisicion_compra where proceso = 2 and status = 2 and folio_requisicion_compra = '$folio'");
                             if ($det2 = pg_fetch_array($detalle)) {
                                 ?>
@@ -75,15 +107,15 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
                                     <td scope="col"  style="width: 15%;"></td>
                                     <td scope="col">Concepto</td>
                                     <td scope="col">Cantidad</td>
-                                    <td scope="col">$Precio1</td>
-                                    <td scope="col">$Importe1</td>
-                                    <td scope="col">Observación1</td>
+                                    <td scope="col" class="bg-corporate-lighter">$Precio1</td>
+                                    <td scope="col" class="bg-corporate-lighter">$Importe1</td>
+                                    <td scope="col" class="bg-corporate-lighter">Observación1</td>
                                     <td scope="col">$Precio2</td>
-                                    <td scope="col">$Importe2</td>
+                                    <td scope="col" >$Importe2</td>
                                     <td scope="col">Observación2</td>
-                                    <td scope="col">$Precio3</td>
-                                    <td scope="col">$Importe3</td>
-                                    <td scope="col">Observación3</td>
+                                    <td scope="col" class="bg-corporate-lighter">$Precio3</td>
+                                    <td scope="col" class="bg-corporate-lighter">$Importe3</td>
+                                    <td scope="col" class="bg-corporate-lighter">Observación3</td>
                                 </tr>
                             <?php } ?>
                         </thead>
@@ -94,25 +126,22 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
                                 <tr>
                                     <th scope="row">
                                         <a class=" form-control btn add_cot btn_new btn-block btn-hero btn-noborder btn-rounded btn-alt-danger" href="includes/delete_requisicion.php?id=<?php echo $det['id_requisicion_compra'] ?>&folio=<?php echo $folio ?>">Quitar</a>
-                                        <!--<a href="includes/delete_requisicion.php?id=<?php echo $det['id_requisicion_compra'] ?>&folio=<?php echo $folio ?>">Quitar</a>-->
+
                                     </th>
                                     <td><?php echo $det['concepto_solicitado'] ?></td>
                                     <td><?php echo $det['cantidad'] ?></td>
-                                    <td><?php echo "$" . $det['precio1'] ?></td>
-                                    <?php $imp1 = $det['precio1'] * $det['cantidad'] ?>
-                                    <td><?php echo "$" . $imp1 ?></td>
-                                    <td><?php echo $det['observacion1'] ?></td>
+                                    <td class="bg-corporate-lighter"><?php echo "$" . $det['precio1'] ?></td>
+
+                                    <td class="bg-corporate-lighter"><?php echo $det['importe1'] ?></td>
+                                    <td class="bg-corporate-lighter"><?php echo $det['observacion1'] ?></td>
                                     <td><?php echo "$" . $det['precio2'] ?></td>
-                                    <?php $imp2 = $det['precio2'] * $det['cantidad'] ?>
-                                    <td><?php echo "$" . $imp2 ?></td>
+
+                                    <td><?php echo $det['importe2'] ?></td>
                                     <td><?php echo $det['observacion2'] ?></td>
-                                    <td><?php echo "$" . $det['precio3'] ?></td>
-                                    <?php $imp3 = $det['precio3'] * $det['cantidad'] ?>
-                                    <td><?php echo "$" . $imp3 ?></td>
-                                    <td><?php echo $det['observacion3'] ?></td>
-                                </tr>
-                                <tr>
-                                    <?php $sum = $det['precio3'] * $det['cantidad'] ?>
+                                    <td class="bg-corporate-lighter"><?php echo "$" . $det['precio3'] ?></td>
+
+                                    <td class="bg-corporate-lighter"><?php echo $det['importe3'] ?></td>
+                                    <td class="bg-corporate-lighter"><?php echo $det['observacion3'] ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -133,13 +162,23 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
 
                     </div>
                     <div class="col-sm-6 col-xl-2">
-                        $ 90000.000
-                    </div>
-                    <div class="col-sm-6 col-xl-3 text-center">
-                        $9999.999
-                    </div>
-                    <div class="col-sm-6 col-xl-3 text-center">
-                        $0000.000
+                        <?PHP
+                        $deta = pg_query($conexion, "SELECT sum(importe1) as im1, sum(importe2) as im2, sum(importe3) as im3
+                         FROM sc_requisicion_compra where proceso = 2  and status = 2 and folio_requisicion_compra = '$folio' GROUP BY folio_requisicion_compra");
+                        if ($det3 = pg_fetch_array($deta)) {
+                            echo "$ " . $det3['im1'];
+                            ?>
+                        </div>
+                        <div class="col-sm-6 col-xl-3 text-center">
+                            <?php
+                            echo "$ " . $det3['im2'];
+                            ?>
+                        </div>
+                        <div class="col-sm-6 col-xl-3 text-center">
+                            <?php
+                            echo "$ " . $det3['im3'];
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -151,9 +190,10 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
 <div class="col-12">
     <!-- Rounded -->
     <div class="block">
-        <form action="hacerCompra.php" method="POST">
+        <form  action="includes/cotizacion.php" name="observacionesCompra" id="observacionesCompra" class="js-van"
+               onload="e.preventeDefaul();" method="post">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Observación</h3> <input name="folio" id="folio" value="<?php echo $folio ?>" hidden>
+                <h3 class="block-title">Observación</h3> <input name="folios" id="folios" value="<?php echo $folio ?>" hidden>
             </div>
             <div class="block-content">
                 <div class="row items-push-2x text-sm-left border-3x border-danger">
@@ -161,16 +201,16 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
 
                     </div>
                     <div class="col-sm-6 col-xl-3 text-right">
-                        <textarea class="form-control" name="obsr1" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" name="obsr1" id="obsr1" rows="3"></textarea>
                     </div>
                     <div class="col-sm-6 col-xl-3 text-right">
-                        <textarea class="form-control" name="obsr2" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" name="obsr2" id="obsr2" rows="3"></textarea>
                     </div>
                     <div class="col-sm-6 col-xl-3 text-right">
-                        <textarea class="form-control" name="obsr3" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" name="obsr3" id="obsr3" rows="3"></textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-outline-info min-width-125" data-toggle="click-ripple">Terminar Cotización</button>
+                <button type="submit" class="btn btn-outline-info min-width-125 add_obscot">Terminar Cotización</button>
             </div>
         </form>
     </div>
@@ -188,3 +228,31 @@ $detalles = pg_query($conexion, "SELECT concepto_solicitado, medida, cantidad, m
 <?php $cb->get_js('js/pages/be_pages_dashboard.min.js'); ?>
 
 <?php require 'inc/_global/views/footer_end.php'; ?>
+
+<!--<script>
+    $(document).ready(function () {
+        //clase para enviar datos para modificar observaciones
+        $('.add_obscot').click(function (e) {
+//            e.preventDefault();
+            $.ajax({
+                url: 'includes/cotizacion.php',
+                type: 'POST',
+                async: true,
+                data: $('#observacionesCompra').serialize(),
+                success: function (response) {
+                    if (response != 'ERROR ') {
+//  Aquí puedo mostrar un alert que no se modificaron los datos..
+                        var info = JSON.parse(response);
+                        console.log(info);
+                    } else {
+//                        $('alertaCoti').html('<p> Error al cotizar </p>');
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        });
+    });
+</script>-->
