@@ -30,7 +30,7 @@
             <div class="content-header-section sidebar-mini-visible-b">
                 <!-- Logo -->
                 <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
-                    <span class="text-dual-primary-dark">A</span><span class="text-primary">WEB</span>
+                    <span class="text-dual-primary-dark">ALLIE</span><span class="text-primary">WEB</span>
                 </span>
                 <!-- END Logo -->
             </div>
@@ -49,7 +49,7 @@
                 <div class="content-header-item">
                     <a class="link-effect font-w700" href="index.php">
                         <i class="si si-fire text-primary"></i>
-                        <span class="font-size-xl text-dual-primary-dark">Allie</span><span class="font-size-xl text-primary">Web</span>
+                        <span class="font-size-xl text-dual-primary-dark">Allie</span><span class="font-size-xl text-primary">WEB</span>
                     </a>
                 </div>
                 <!-- END Logo -->
@@ -94,9 +94,9 @@
 
         <!-- Side Navigation -->
         <div class="content-side content-side">
-            <ul class="nav-main">
+            <ol class="nav-main">
                 <a class="btn btn-light btn-block-option" href="sc_menu.php"> Seguimiento y Control </a>
-            </ul>
+            </ol>
         </div>
         <!-- END Side Navigation -->
     </div>

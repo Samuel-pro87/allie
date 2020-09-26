@@ -17,7 +17,7 @@ require 'inc\_classes\Template.php';
 // **************************************************************************************************
 
 //                              : Name, version and assets folder's name
-$cb                             = new Template('Codebase', '3.3', 'assets');
+$cb                             = new Template('DVRS', '3.3', 'assets');
 
 
 // **************************************************************************************************
@@ -25,9 +25,9 @@ $cb                             = new Template('Codebase', '3.3', 'assets');
 // **************************************************************************************************
 
 //                              : The data is added in the <head> section of the page
-$cb->author                     = 'Rudi Dearcia';
+$cb->author                     = 'Rudi S Dearcia';
 $cb->robots                     = 'noindex, nofollow';
-$cb->title                      = 'Allie Cobranza Especializada';
+$cb->title                      = 'sistemaAllie';
 $cb->description                = 'Allie Cobranza Especializada, Sistema administrativo y de control';
 
 //                              : The url of your site, used in Open Graph Meta Data (eg 'https://example.com')
@@ -47,7 +47,7 @@ $cb->og_url_image               = '';
 // 'flat'                       : flat color theme
 // 'corporate'                  : corporate color theme
 // 'earth'                      : earth color theme
-$cb->theme                      = '';
+$cb->theme                      = 'flat';
 
 // true                         : Remembers active color theme between pages
 //                                (when set through color theme helper Template._uiHandleTheme())

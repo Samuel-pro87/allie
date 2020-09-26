@@ -25,7 +25,7 @@
                 <a class="img-link mr-5" href="be_pages_generic_profile.php">
                     <?php $cb->get_avatar('15', '', 32, false); ?>
                 </a>
-                <a class="align-middle link-effect text-primary-dark font-w600" href="be_pages_generic_profile.php">John Smith</a>
+                <a class="align-middle link-effect text-primary-dark font-w600" href="be_pages_generic_profile.php">John Ssmith</a>
             </div>
             <!-- END User Info -->
         </div>
